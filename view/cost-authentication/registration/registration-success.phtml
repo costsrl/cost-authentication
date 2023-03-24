@@ -1,0 +1,10 @@
+<?php echo $this->partial('cost-authentication/layout/nav-menu', array('navMenu' => $this->navMenu)); ?>
+<hr />
+<div class="jumbotron">
+<br />
+<h2><?php 
+//$msg = 'An email has been sent to <span class="zf-green">%s</span>.You will receive confirmation of activation of your account as soon as possible!';
+$msg = 'Your Account is activated. Please LogIn with your username or password';
+echo sprintf($this->translate($msg), $email);?></h2>
+<br />
+</div>

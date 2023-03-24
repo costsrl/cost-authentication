@@ -1,0 +1,28 @@
+<?php
+$this->headLink()->appendStylesheet($this->basePath('css/authentication.css'));
+?>
+<div class="container">
+<div class="card card-container">
+    <img id="profile-img" class="profile-img-card" src="img/avatar.png"/>
+    <p id="profile-name" class="profile-name-card"></p>
+	<h5><?php echo $this->translate('Change email');?></h5>
+	<?php echo $this->partial('cost-authentication/layout/nav-menu', array('navMenu' => $this->navMenu)); ?>
+    <?php
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('changeEmail'));
+    $form->setAttribute('class', 'form-signin');
+    $form->prepare();
+    
+    echo $this->form()->openTag($form);
+    echo $this->formPassword($form->get('currentPassword'));
+    echo '<br />';
+    echo $this->formText($form->get('newEmail'));
+    echo '<br />';
+    echo $this->formText($form->get('newEmailConfirm'));
+    echo '<br />';
+    echo $this->formSubmit($form->get('submit'));
+    echo $this->form()->closeTag();
+    ?>
+    <br/>
+    <?php echo '<div style="font-size: 20px; color: red;">' . $this->message . '</div>'; ?>
+</div>

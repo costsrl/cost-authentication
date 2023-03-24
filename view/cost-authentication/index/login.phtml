@@ -1,0 +1,45 @@
+<?php
+$this->headLink()->appendStylesheet($this->basePath('css/authentication.css'));
+?>
+
+<div class="container">
+    <div class="card card-container">
+        <img id="profile-img" class="profile-img-card" src="img/avatar.png"/>
+        <p id="profile-name" class="profile-name-card"></p>
+        <?php echo $this->partial('cost-authentication/layout/nav-menu', array(
+                'navMenu'               => $this->navMenu,
+                'navMenuPermission'     => $this->navMenuPermission,
+                'buttonRegister'        => $this->linkToRegister,
+                'buttonForgotPassword'  => $this->linkToForgetPwd
+
+        )); ?>
+        <?php
+        $form = $this->form;
+        $form->setAttribute('action', $this->url('login'));
+        $form->setAttribute('class', 'form-signin');
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        ?>
+        <span id="reauth-email" class="reauth-email"></span>
+        <?php echo $this->formText($form->get('usernameOrEmail')); ?>
+        <?php echo $this->formPassword($form->get('password')); ?>
+        <div id="remember" class="checkbox">
+            <label>
+                <?php echo $this->formRow($form->get('rememberme')); ?>
+            </label>
+        </div>
+        <div class="custom-control custom-checkbox mb-3">
+            <?php if ($linkToRegister): ?>
+                <a href="<?php echo $this->url('registration'); ?>" class="btn btn-primary navbar-btn"><?php echo $this->translate('SignUp'); ?></a>
+            <?php endif; ?>
+            <?php if ($linkToForgetPwd): ?>
+                <a href="<?php echo $this->url('forgotten-password'); ?>" class="btn btn-default navbar-btn"><?php echo $this->translate('ForgotYourPassword?'); ?></a>
+            <?php endif; ?>
+        </div>
+        <?php echo $this->formSubmit($form->get('submit'));?>
+        <?php echo $this->form()->closeTag();?>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,21 @@
+{
+  "name" : "costsrl/cost-authentication",
+  "description" : "Authentication based on DoctrineORMModule",
+  "authors" : [ {
+    "name" : "Renato Salvatori",
+    "email" : "renato.s@cost.it",
+    "homepage" : "http://www.cost.it",
+    "role" : "Developer"
+  } ],
+  "require" : {
+    "php" : ">=7.0"
+  },
+  "license" : "BSD-3-Clause",
+  "keywords" : [ "laminas", "cost-authorization", "doctrine-orm-module", "doctrine" ],
+  "minimum-stability" : "dev",
+  "autoload" : {
+    "psr-4" : {
+      "CostAuthentication\\" : "src/"
+    }
+  }
+}

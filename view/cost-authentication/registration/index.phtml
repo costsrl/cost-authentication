@@ -1,0 +1,32 @@
+<?php
+$this->headLink()->appendStylesheet($this->basePath('css/authentication.css'));
+?>
+<div class="container">
+    <div class="card card-container">
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <?php echo $this->partial('cost-authentication/layout/nav-menu', array('navMenu' => $this->navMenu,'navMenuPermission' => $this->navMenuPermission)); ?>
+        <?php
+        $form = $this->form;
+        $form->setAttribute('action', $this->url('registration'));
+        $form->setAttribute('class', 'form-signin');
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        ?>
+            <span id="reauth-email" class="reauth-email"></span>
+            <?php echo $this->formRow($form->get('username'));?>
+            <?php echo $this->formRow($form->get('firstName'));?>
+            <?php echo $this->formRow($form->get('lastName'));?>
+            <?php echo $this->formRow($form->get('displayName'));?>
+            <?php echo $this->formRow($form->get('email'));?>
+            <?php echo $this->formRow($form->get('password'));?>
+            <?php echo $this->formRow($form->get('passwordConfirm'));?>
+            <?php
+            echo '<div style="width: 470px">';
+            echo $this->formRow($form->get('captcha'));
+            echo '</div>';
+            ?>
+        <?php  echo $this->formSubmit($form->get('submit'));;?>
+        <?php echo $this->form()->closeTag();?>
+    </div><!-- /card-container -->
+</div><!-- /container -->

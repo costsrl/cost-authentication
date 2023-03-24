@@ -1,0 +1,133 @@
+<?php
+/**
+ * CsnUser Configuration
+ *
+ * If you have a ./config/autoload/ directory set up for your project, you can
+ * drop this config file in it and change the values as you wish.
+ */
+
+/**
+ * Static salt
+ *
+ * This constant value is prepended to the password before hashing
+ *
+ * Default value: 'aFGQ475SDsdfsaf2342'
+ * Accepted values: Any string
+ */
+const STATIC_SALT = 'aFGQ475SDsdfsaf2342';
+
+$settings = array(
+    /**
+     * Login Redirect Route
+     *
+     * Upon successful login the user will be redirected to the entered route
+     *
+     * Default value: 'user'
+     * Accepted values: A valid route name within your application
+     *
+     */
+    'login_redirect_route' => 'home',
+
+    /**
+     * Logout Redirect Route
+     *
+     * Upon logging out the user will be redirected to the enterd route
+     *
+     * Default value: 'user'
+     * Accepted values: A valid route name within your application
+     */
+    'logout_redirect_route' => 'login',
+
+    /**
+     * Visibility of navigation menu
+     *
+     * If set to false the navigation menu does not appear
+     *
+     * Default value: true
+     * Accepted values: true/false
+     */
+    'nav_menu' => true,
+
+     /** link to register */
+        'linkRegister' => false,
+
+
+     /** link to forgot password */
+     'linkForgotPassword' => false,
+
+     /** hide - show checkbox remenber */
+     'rememberMe' => false,
+
+     'static_salt' => 'aFGQ475SDsdfsaf2342',
+     /** email to sand back **/
+     'notification_user' => 'rennasalva@gmal.com',
+
+
+ 
+ /**
+ * You do not need to edit below this line
+ * ---------------------------------------
+ */
+    'static_salt' => STATIC_SALT,
+    'paramsCost'=> 14,
+    'paramsSalt'=>''
+);
+
+
+/**
+ * 
+ * // step di registrazione form
+ * 
+ * 1) Registrazione con attivazione immediata
+ * 2) Registrazione con invio email e attivazione lato admin
+ */
+$workFlowRegistration = array(
+    'registrationWorkflow'=>1
+);
+
+
+// todo call passwordAdapter Bcrypt
+//$passwordAdapter = new CostAuthentication\Authentication\Adapter\passwordAdapter($settings);
+return array(
+    'costauthentication' => $settings,
+    	'doctrine' => array(
+        	'authentication' => array(
+            	'orm_default' => array(
+                	'credential_callable' => function(CostAuthentication\Entity\User $user, $passwordGiven) use ($passwordAdapter) {
+                	if ($user->getPassword() == md5(STATIC_SALT . $passwordGiven . $user->getPasswordSalt()) &&
+						$user->getState() == 1) {
+						return true;
+					}
+					else {
+						return false;
+					}
+                },
+            ),
+        ),
+    ),
+    'service_manager'=>[
+            'invokables' => [
+                'DoctrineModule\Authentication\Storage\Session' => Authentication\Storage\SessionStorage::class,
+
+            ],
+        ],
+    'doctrine_factories'=>[
+            'authenticationstorage'=> Authentication\Storage\StorageFactory::class,
+        ],
+    'view_manager' =>[
+        'template_map' =>[
+            // example overwritetemplate
+            /*'cost-authentication/layout/nav-menu' => __DIR__ . '/../../module/Application/view/overwrite/layout/nav-menu.phtml',
+            'cost-authentication/registration/confirm-email-error' => __DIR__ . '/../../module/Application/view/overwrite/registration/confirm-email-error.phtml',
+            'cost-authentication/registration/index' => __DIR__ . '/../../module/Application/view/overwrite/registration/index.phtml',
+            'cost-authentication/index/login' => __DIR__ . '/../../module/Application/view/overwrite/index/login.phtml',
+            'cost-authentication/index/index' => __DIR__ . '/../../module/Application/view/overwrite/index/index.phtml',
+            'cost-authentication/registration/edit-profile' => __DIR__ . '/../../module/Application/view/overwrite/registration/edit-profile.phtml',
+            'cost-authentication/registration/change-password' => __DIR__ . '/../../module/Application/view/overwrite/registration/change-password.phtml',
+            'cost-authentication/registration/change-password' => __DIR__ . '/../../module/Application/view/overwrite/registration/change-password.phtml',
+            'cost-authentication/registration/change-email' => __DIR__ . '/../../module/Application/view/overwrite/registration/change-email.phtml',
+            'cost-authentication/registration/confirm-email-change-password-error' => __DIR__ . '/../../module/Application/view/overwrite/registration/confirm-email-change-password-error.phtml'
+            */
+       ]
+    ],
+);
